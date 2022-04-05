@@ -30,8 +30,8 @@
                 mkdir(dirname($imagePath));
                 move_uploaded_file($image['tmp_name'], $imagePath);
             }
-            $statement = $pdo->prepare("INSERT INTO products (image, title, description, prize, create_date)
-                            VALUES (:image, :title, :description, :prize, :date)");
+            $statement = $pdo->prepare("UPDATE INTO products (image, title, description, prize)
+                            VALUES (:image, :title, :description, :prize)");
             $statement->bindValue(':image', $imagePath);
             $statement->bindValue(':title', $title);
             $statement->bindValue(':description', $description);

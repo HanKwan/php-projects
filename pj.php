@@ -1,10 +1,10 @@
 <?php 
-    $pdo = new PDO('mysql:host=localhost;port=3308;dbname=products_crud', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=product_crud', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // $statement = $pdo->prepare('SELECT * FROM products ORDER BY create_date DESC');
-    // $statement->execute();
-    // $product = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement = $pdo->prepare('SELECT * FROM products ORDER BY create_date DESC');
+    $statement->execute();
+    $product = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -41,8 +41,11 @@
         <td><?php echo $product['prize'] ?></td>
         <td><?php echo $product['create_date'] ?></td>
         <td>
-            <button type="button" class="btn btn-sm btn-success">Edit</button>
-            <button type="button" class="btn btn-sm btn-danger">Delete</button>
+            <a href="edit.php?id=<?php echo $product['id'] ?>" type="button" class="btn btn-sm btn-success">Edit</button>
+            <form action="delete.php" method="POST">
+                <input type="hidden" name="id" value="<?php echo $product['id'] ?>">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
         </td> 
         </tr>
     <?php } ?>
