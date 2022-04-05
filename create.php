@@ -1,5 +1,5 @@
 <?php 
-    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=products_curd', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;port=3308;dbname=products_crud', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $ERROR = [];
@@ -50,7 +50,7 @@
             <?php } ?>
         </div>
     <?php } ?>
-    <form action="create.php" method="post">
+    <form action="create.php" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label">image</label>
             <input type="file" class="form-control">
