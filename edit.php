@@ -1,16 +1,28 @@
 <?php 
     $pdo = new PDO('mysql:host=localhost;port=3306;dbname=product_crud', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $id = $_GET['id'] ?? null;
+
+    if (!$id) {
+        header('Location: pj.php');
+        exit;
+    }
+
+    $statement = $pdo->prepare('SELECT * FROM products WHERE id = :id');
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $product = $statement->fetch(PDO::FETCH_ASSOC);
 
     $ERROR = [];
-    $title = '';
-    $description = '';
-    $prize = '';
+    $title = $product['title'];
+    $description = $product['description'];
+    $prize = $product['prize'];
+ 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'];
         $description = $_POST['description'];
         $prize = $_POST['prize'];
-        $date = date('Y-m-d H:i:s');
 
         if (!$title) {                              //error function should be above execution
             $ERROR[] = 'title is required';
@@ -24,19 +36,21 @@
 
         if (empty($ERROR)) {
             $image = $_FILES['image'] ?? null;
-            $imagePath = '';
+            $imagePath = $imagePath;
             if ($image && $image['tmp_name']) {
+                if ($product['image']) {
+                    unlink($product['image']);
+                }
                 $imagePath = 'images/'.randomStr(8).'/'.$image['name'];
                 mkdir(dirname($imagePath));
                 move_uploaded_file($image['tmp_name'], $imagePath);
             }
-            $statement = $pdo->prepare("UPDATE INTO products (image, title, description, prize)
-                            VALUES (:image, :title, :description, :prize)");
+            $statement = $pdo->prepare("UPDATE products SET image = :image, title = :title, description = :description, prize = :prize WHERE id = :id");
             $statement->bindValue(':image', $imagePath);
             $statement->bindValue(':title', $title);
             $statement->bindValue(':description', $description);
             $statement->bindValue(':prize', $prize);
-            $statement->bindValue(':date', $date);
+            $statement->bindValue(':id', $id);
             $statement->execute();
             header('Location: pj.php');
         };
@@ -62,7 +76,11 @@
     <title>product crud</title>
 </head>
 <body>
-    <h1>Create new item</h1>
+    <a href="pj.php">Back</a>
+    <h1>Edit the item</h1>
+    <?php if ($product['image']) { ?>
+        <img src="<?php echo $product['image'] ?>" class="editImg">
+    <?php } ?>
     <?php if (!empty($ERROR)) { ?>
         <div class="alert alert-danger">
             <?php foreach ($ERROR as $ERROR) { ?>
@@ -77,15 +95,15 @@
         </div>
         <div class="mb-3">
             <label class="form-label">title</label>
-            <input type="text" name="title" value="<?php echo $title ?>" class="form-control">
+            <input type="text" name="title" value="<?php echo $product['title'] ?>" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">description</label>
-            <textarea class="form-control" value="<?php $description ?>" name="description"></textarea>
+            <textarea class="form-control" value="<?php $product['description'] ?>" name="description"></textarea>
         </div>
         <div class="mb-3">
             <label class="form-label">prize</label>
-            <input type="number" class="form-control" step=".01" value="<?php $prize ?>" name="prize">
+            <input type="number" class="form-control" step=".01" value="<?php $product['prize'] ?>" name="prize">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

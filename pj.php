@@ -14,6 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="app.css">
     <title>product crud</title>
 </head>
 <body>
@@ -41,8 +42,8 @@
         <td><?php echo $product['prize'] ?></td>
         <td><?php echo $product['create_date'] ?></td>
         <td>
-            <a href="edit.php?id=<?php echo $product['id'] ?>" type="button" class="btn btn-sm btn-success">Edit</button>
-            <form action="delete.php" method="POST">
+            <a href="edit.php?id=<?php echo $product['id'] ?>" class="btn btn-sm btn-success">Edit</button>
+            <form action="delete.php" method="POST" class="editBtn">
                 <input type="hidden" name="id" value="<?php echo $product['id'] ?>">
                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
             </form>

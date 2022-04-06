@@ -10,6 +10,7 @@
         $title = $_POST['title'];
         $description = $_POST['description'];
         $prize = $_POST['prize'];
+        $image = $_POST['image'];
         $date = date('Y-m-d H:i:s');
 
         if (!$title) {                              //error function should be above execution
@@ -73,7 +74,7 @@
     <form action="create.php" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label">image</label>
-            <input type="file" class="form-control">
+            <input type="file" name="image" class="form-control">
         </div>
         <div class="mb-3">
             <label class="form-label">title</label>
