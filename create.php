@@ -27,9 +27,11 @@
             $image = $_FILES['image'] ?? null;
             $imagePath = '';
             if ($image && $image['tmp_name']) {
-                $imagePath = 'images/'.randomStr(8).'/'.$image['name'];
+                $imagePath = 'images/'.randomString(8).'/'.$image['name'];
                 mkdir(dirname($imagePath));
                 move_uploaded_file($image['tmp_name'], $imagePath);
+                var_dump($imagePath);
+                exit;
             }
             $statement = $pdo->prepare("INSERT INTO products (image, title, description, prize, create_date)
                             VALUES (:image, :title, :description, :prize, :date)");
@@ -42,7 +44,7 @@
             header('Location: pj.php');
         };
     };
-    function randomStr($n) {
+    function randomString($n) {
         $charcaters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $str = '';
         for ($i = 0; $i < $n; $i++) {
