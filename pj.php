@@ -43,7 +43,10 @@
           <td><?php echo $product['create_date'] ?></td>
           <td>
             <button type="button" class="btn btn-sm btn-outline-success">edit</button>
-            <button type="button" class="btn btn-sm btn-outline-dark">delete</button>
+            <form action="delete.php" method="post"> <!-- NEED TO WRITE METHOD WITH UPPERCASSE -->
+              <input type="hidden" name="id" value="<?php echo $product['id'] ?>">
+              <button type="submit" class="btn btn-sm btn-outline-dark">delete</button>
+            </form>
           </td>
         </tr>
       <?php } ?>

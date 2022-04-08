@@ -3,9 +3,11 @@
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $errors = [];
+    $title = '';
+    $description = '';
+    $prize = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'];    
-        $image = $_POST['image'];    
         $description = $_POST['description'];    
         $prize = $_POST['prize'];
         $date = date('Y-m-d H:i:s');
@@ -15,7 +17,14 @@
         if (empty($prize)) {
             $errors[] = 'prize is required';
         }
+        if (!is_dir('images')) {
+            mkdir('images');
+        }
         if (empty($errors)) {
+            $image = $_FILES['image'] ?? null;
+            if ($image && $image['tmp-name']) {
+                move_uploaded_file($image['tmp_name'], $imagePath);
+            }
             $statement = $pdo->prepare("INSERT INTO products (image, title, description, prize, create_date)
                             VALUES (:image, :title, :description, :prize, :date)");
             $statement->bindValue(':image', '');
@@ -40,7 +49,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="create.php" method="POST">
+<form action="create.php" method="POST" enctype="multipart/form-data">
     <h2>Create new product</h2>
     <?php if (!empty($errors)) { ?>
         <div class="alert alert-danger">
