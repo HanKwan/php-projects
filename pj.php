@@ -19,6 +19,7 @@
 </head>
 <body>
   <h2>Products table</h2>
+  <a href="create.php" class="btn btn-success">Create new product</a>
   <table class="table">
     <thead>
       <tr>
@@ -41,8 +42,8 @@
           <td><?php echo $product['prize'] ?></td>
           <td><?php echo $product['create_date'] ?></td>
           <td>
-            <button type="button" class="btn btn-outline-success">edit</button>
-            <button type="button" class="btn btn-outline-dark">delete</button>
+            <button type="button" class="btn btn-sm btn-outline-success">edit</button>
+            <button type="button" class="btn btn-sm btn-outline-dark">delete</button>
           </td>
         </tr>
       <?php } ?>
