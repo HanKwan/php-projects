@@ -1,5 +1,5 @@
 <?php 
-    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=product_crud', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=products_crud01', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $statement = $pdo->prepare('SELECT * FROM products ORDER BY create_date DESC');
@@ -36,7 +36,7 @@
     <?php foreach($product as $i => $product) { ?>
         <tr>
         <th scope="row"><?php echo $i + 1 ?></th>
-        <td><?php echo $product['image'] ?></td>
+        <td><img src="<?php echo $product['image'] ?>" class="displayImg"></td>
         <td><?php echo $product['title'] ?></td>
         <td><?php echo $product['description'] ?></td>
         <td><?php echo $product['prize'] ?></td>

@@ -1,5 +1,5 @@
 <?php 
-    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=product_crud', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=products_crud01', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $ERROR = [];
@@ -30,8 +30,6 @@
                 $imagePath = 'images/'.randomString().'/'.$image['name'];
                 mkdir(dirname($imagePath));
                 move_uploaded_file($image['tmp_name'], $imagePath);
-                var_dump($imagePath);
-                exit;
             }
             $statement = $pdo->prepare("INSERT INTO products (image, title, description, prize, create_date)
                             VALUES (:image, :title, :description, :prize, :date)");
