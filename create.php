@@ -27,7 +27,7 @@
             $image = $_FILES['image'] ?? null;
             $imagePath = '';
             if ($image && $image['tmp_name']) {
-                $imagePath = 'images/'.randomString(8).'/'.$image['name'];
+                $imagePath = 'images/'.randomString().'/'.$image['name'];
                 mkdir(dirname($imagePath));
                 move_uploaded_file($image['tmp_name'], $imagePath);
                 var_dump($imagePath);
@@ -44,14 +44,11 @@
             header('Location: pj.php');
         };
     };
-    function randomString($n) {
-        $charcaters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $str = '';
-        for ($i = 0; $i < $n; $i++) {
-            $index = rand(0, strlen($charcaters) - 1);
-            $str = $charcaters[$index];
-        }
-        return $str;
+    function randomString() {
+        $keyLength = 8;
+        $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randstr = substr(str_shuffle($str), 0, $keyLength);
+        return $randstr;
     }
 ?>
 
