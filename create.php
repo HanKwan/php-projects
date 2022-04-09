@@ -7,7 +7,7 @@
     $description = '';
     $prize = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $title = $_POST['title'];    
+        $title = $_POST['title'];
         $description = $_POST['description'];    
         $prize = $_POST['prize'];
         $date = date('Y-m-d H:i:s');
@@ -22,12 +22,14 @@
         }
         if (empty($errors)) {
             $image = $_FILES['image'] ?? null;
-            if ($image && $image['tmp-name']) {
+            if ($image && $image['tmp_name']) {
+                $imagePath = 'images/'.randomStr().'/'.$image['name'];
+                mkdir(dirname($imagePath));
                 move_uploaded_file($image['tmp_name'], $imagePath);
             }
             $statement = $pdo->prepare("INSERT INTO products (image, title, description, prize, create_date)
                             VALUES (:image, :title, :description, :prize, :date)");
-            $statement->bindValue(':image', '');
+            $statement->bindValue(':image', $imagePath);
             $statement->bindValue(':title', $title);
             $statement->bindValue(':description', $description);
             $statement->bindValue(':prize', $prize);
@@ -35,6 +37,12 @@
             $statement->execute();
             header('Location: pj.php');
         }
+    }
+    function randomStr() {
+        $keylength = 5;
+        $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randString = substr(str_shuffle($str), 0, $keylength);
+        return $randString;
     }
 ?>
 
@@ -54,7 +62,7 @@
     <?php if (!empty($errors)) { ?>
         <div class="alert alert-danger">
             <?php foreach($errors as $errors) {
-                echo $errors;
+                echo $errors.'<br>';
             } ?>
         </div>
     <?php } ?>

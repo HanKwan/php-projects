@@ -2,7 +2,14 @@
   $pdo = new PDO('mysql:host=localhost;port=3306;dbname=products_crud01', 'root', '');
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $statement = $pdo->prepare("SELECT * FROM products ORDER BY create_date DESC");
+  $search = $_GET['search'] ?? '';
+  if ($search) {
+    $statement = $pdo->prepare("SELECT * FROM products  WHERE title LIKE :title ORDER BY create_date DESC");
+    $statement->bindValue(':title', "%$search%");  
+  } else {
+    $statement = $pdo->prepare("SELECT * FROM products ORDER BY create_date DESC");
+  }
+
   $statement->execute();
   $product = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -20,6 +27,12 @@
 <body>
   <h2>Products table</h2>
   <a href="create.php" class="btn btn-success">Create new product</a>
+  <form action="pj.php" method="get">
+    <div class="input-group mb-3">
+      <input type="text" name="search" value="<?php echo $search ?>" class="form-control" placeholder="search">
+      <button type="submit" class="input-group-text">search</button>
+    </div>
+  </form>
   <table class="table">
     <thead>
       <tr>
@@ -36,14 +49,16 @@
       <?php foreach($product as $i => $product) { ?>
         <tr>
           <th scope="row"><?php echo $i + 1 ?></th>
-          <td><?php echo $product['image'] ?></td>
+          <td>
+            <img src="<?php echo $product['image'] ?>" class="displayImg">
+          </td>
           <td><?php echo $product['title'] ?></td>
           <td><?php echo $product['description'] ?></td>
           <td><?php echo $product['prize'] ?></td>
           <td><?php echo $product['create_date'] ?></td>
           <td>
-            <button type="button" class="btn btn-sm btn-outline-success">edit</button>
-            <form action="delete.php" method="post"> <!-- NEED TO WRITE METHOD WITH UPPERCASSE -->
+            <a href="edit.php?id=<?php echo $product['id'] ?>" class="btn btn-sm btn-outline-success">edit</a>
+            <form action="delete.php" method="post"> <!-- NEED TO WRITE METHOD WITH LOWERCASSE -->
               <input type="hidden" name="id" value="<?php echo $product['id'] ?>">
               <button type="submit" class="btn btn-sm btn-outline-dark">delete</button>
             </form>
