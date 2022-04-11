@@ -1,5 +1,27 @@
 <?php
-    // $pdo = new PDO('mysql:host=localhost;port=3308;dbname=products_crud', 'root', '');
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo 'hello';
+    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=product_feedback', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navBar">
+        <div class="container">
+            <h2>Product</h2>
+            <ul class="ulist">
+                <li>Home</li>
+                <li>Feedback</li>
+                <li>About</li>
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>

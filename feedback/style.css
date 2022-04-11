@@ -1,0 +1,15 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.navBar {
+    background-color:rgba(230, 235, 238, 0.925);
+    height: 5rem;
+}
+.container {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
