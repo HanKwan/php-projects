@@ -21,7 +21,7 @@
                 <ul class="ulist">
                     <a class="aLink" href="home.php"><li class="link">Home</li></a>
                     <a class="aLink" href="review.php"><li class="link">Feedback</li></a>
-                    <a class="aLink" href="#"><li class="link">About</li></a>
+                    <a class="aLink" href="about.php"><li class="link">About</li></a>
                 </ul>
             </div>
         </nav>

@@ -44,6 +44,13 @@
     float: none;
     margin-bottom: 10px;
 }
-.thumbBtn {
-    width: 100%;
+.profile-con {
+    text-align: center;
+    padding: 0 40px;
+}
+.profileImg {
+    width: 120px;
+    display: block;
+    margin: 40px auto;
+    border-radius: 60px;
 }

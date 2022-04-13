@@ -4,7 +4,6 @@
     $statement = $pdo->prepare("SELECT * FROM customer_feedback ORDER BY date DESC");
     $statement->execute();
     $feedback = $statement->fetchAll(PDO::FETCH_ASSOC);
-    echo 'hello';
 ?>
 
     <main class="fb_main mt-5">

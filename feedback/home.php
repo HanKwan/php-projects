@@ -6,6 +6,7 @@
         $username = $_POST['username'];
         $email = $_POST['email'];
         $feedback = $_POST['feedback'];
+        $date = date('Y-m-d H:i:s');
 
         if (empty($username)) {
             $nameErr = 'Username is required';
@@ -15,6 +16,17 @@
         }
         if (empty($feedback)) {
             $feedErr = 'feedback is required';
+        }
+    
+        if (empty($nameErr) && empty($emailErr) && empty($feedErr)) {
+            $statement = $pdo->prepare("INSERT INTO customer_feedback (username, email, body, date)
+                            VALUES (:username, :email, :body, :date)");
+            $statement->bindValue(':username', $username);
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':body', $feedback);
+            $statement->bindValue(':date', $date);
+            $statement->execute();
+            header('Location: review.php');
         }
     }
 ?>
