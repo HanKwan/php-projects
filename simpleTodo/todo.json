@@ -1,8 +1,8 @@
 {
     "test": {
-        "completed": true
+        "completed": false
     },
     "something": {
-        "completed": false
+        "completed": true
     }
 }

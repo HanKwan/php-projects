@@ -19,29 +19,29 @@
     </form>
     <div style="margin-top: 20px;">
         <?php foreach ($todos as $todoName => $todo): ?>
-            <form action="check.php" method="post" style="display: inline-block;">
-                <input type="checkbox" name="checkTodo" <?php echo $todo['completed'] ? 'checked' : '' ?>>
-                <input type="hidden" name="checkTodo" value="<?php echo $todoName ?>">
-            </form>
-    
-            <div style="margin: 10px;">
+            <div style="margin-bottom: 10px;">
+                <form action="check.php" method="post" style="display: inline-block;">
+                    <input type="hidden" name="checking" value="<?php echo $todoName ?>">
+                    <input type="checkbox" class="checkTodo" <?php echo $todo['completed'] ? 'checked' : '' ?>>
+                </form>
+        
                 <?php echo $todoName ?>
-                <form style="display: inline-block;" action="delete.php" method="post">
+
+                <form style="display: inline-block; margin-left: 30px;" action="delete.php" method="post">
                     <input type="hidden" name="deleteTodo" value="<?php echo $todoName ?>">    <!-- don't forget to echo -->
                     <button>Delete</button>
                 </form>
             </div>
-    
         <?php endforeach; ?>
     </div>
 
 <script>
-    const chekcBox = document.querySelectorAll('input[type=checkbox]');
-    checkBox.foreach(cb => {
+    const checkBoxs = document.querySelectorAll('.checkTodo');
+    checkBoxs.forEach(cb => {
         cb.onclick = function () {
-            // this.parentNode
+            this.parentNode.submit();
         }
-    });
+    })
 </script>
 </body>
 </html>
