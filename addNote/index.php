@@ -1,6 +1,7 @@
 <?php
-
-    // $connection = require_once './connection.php';
+    $connection = require_once './connection.php';
+    
+    $notes = $connection->getNotes();
 ?>
 
 <!DOCTYPE html>
@@ -18,15 +19,24 @@
             <div class="col-5">
                 <div>
                     <h3>Add Notes For Better Days :)</h3>
-                    <form class="flex-column d-flex mt-3" action="">
-                        <input class="mb-3" type="text" name="title" placeholder="Note Title">
-                        <textarea name="body" id="" cols="25" rows="5" placeholder="Note Body"></textarea>
+                    <form class="flex-column d-flex mt-3" action="save.php" method="post">
+                        <input class="mb-1" type="text" name="title" placeholder="Note Title">
+                        <textarea name="body" name="body" cols="25" rows="5" placeholder="Note Body"></textarea>
+                        <button class="btn mt-2 btn-primary">Add Note</button>
                     </form>
                 </div>
-                <div class="mt-4 bg-warning container py-2 rounded">
-                    <h5>title</h5>
-                    <p style="height: 60px;">body</p>
-                </div>
+                <?php foreach($notes as $note): ?>
+                    <div class="mt-4 bg-warning container py-1 rounded">
+                        <div class="d-flex justify-content-between">
+                            <h5><?php echo $note['title'] ?></h5>                       <!-- don't just keep forgetting to echo ~.~ -->
+                            <form action="delete.php" method="post">
+                                <input type="hidden" value="<?php echo $note['id'] ?>" name="deleteId">
+                                <button class="border-0 bg-warning cursor-pointer">x</button>
+                            </form>
+                        </div>
+                        <p><?php echo $note['body'] ?></p>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
