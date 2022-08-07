@@ -8,7 +8,7 @@
         }
 
         public function getNotes() {
-            $stmt = $this->pdo->prepare("SELECT * FROM notes ORDER BY created_at");
+            $stmt = $this->pdo->prepare("SELECT * FROM notes ORDER BY created_at DESC");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -23,6 +23,21 @@
         public function removeNote($id) {
             $stmt = $this->pdo->prepare("DELETE FROM notes WHERE id = :id");
             $stmt->bindValue(':id', $id);
+            return $stmt->execute();
+        }
+
+        public function getNoteById($id) {
+            $stmt = $this->pdo->prepare("SELECT * FROM notes WHERE id = :id");      // dont foget to select * -_-
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function updateNote($id, $note) {
+            $stmt = $this->pdo->prepare("UPDATE notes SET title = :title, body = :body WHERE id = :id");
+            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':title', $note['title']);
+            $stmt->bindValue(':body', $note['body']);
             return $stmt->execute();
         }
     }
