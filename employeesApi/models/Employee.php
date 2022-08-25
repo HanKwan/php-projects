@@ -62,4 +62,18 @@ class Employee {
             return false;
         }
     }
+
+    public function delete() {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+        $stmt = $this->conn->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));    // becuz deleting with $_GET is alway a bad idea
+
+        $stmt->bindValue(':id', $this->id);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
