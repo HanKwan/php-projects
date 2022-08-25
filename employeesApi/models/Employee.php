@@ -70,6 +70,32 @@ class Employee {
         $this->id = htmlspecialchars(strip_tags($this->id));    // becuz deleting with $_GET is alway a bad idea
 
         $stmt->bindValue(':id', $this->id);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function update() {
+        $query = 'UPDATE ' . $this->table . ' SET employee_name = :employee_name, email = :email, phone = :phone, address = :address, role_id = :role_id WHERE id = :id';
+        $stmt = $this->conn->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->employee_name = htmlspecialchars(strip_tags($this->employee_name));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->phone = htmlspecialchars(strip_tags($this->phone));
+        $this->address = htmlspecialchars(strip_tags($this->address));
+        $this->role_id = htmlspecialchars(strip_tags($this->role_id));
+
+        $stmt->bindValue(':id', $this->id);
+        $stmt->bindValue(':employee_name', $this->employee_name);
+        $stmt->bindValue(':email', $this->email);
+        $stmt->bindValue(':phone', $this->phone);
+        $stmt->bindValue(':address', $this->address);
+        $stmt->bindValue(':role_id', $this->role_id);
+
         if ($stmt->execute()) {
             return true;
         } else {
