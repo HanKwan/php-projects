@@ -30,7 +30,7 @@
                     <form class="flex-column d-flex mt-3" action="save.php" method="post">
                         <input type="hidden" value="<?php echo $currentNote['id'] ?>" name="id">
                         <input class="mb-1" value="<?php echo $currentNote['title'] ?>" type="text" name="title" placeholder="Note Title">
-                        <textarea name="body" name="body" cols="25" rows="5" placeholder="Note Body"><?php echo $currentNote['body'] ?></textarea>
+                        <textarea name="body" cols="25" rows="5" placeholder="Note Body"><?php echo $currentNote['body'] ?></textarea>
                         <button class="btn mt-2 btn-primary">
                             <?php if ($currentNote['id']): ?>
                                 Update Note
